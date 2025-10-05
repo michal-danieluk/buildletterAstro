@@ -1,0 +1,53 @@
+--- 
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteConfig } from '../config';
+import { getCollection } from 'astro:content';
+import PostCard from '../components/PostCard.astro';
+
+const allPosts = await getCollection('blog');
+const sortedPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const featuredPosts = sortedPosts.filter(post => post.data.featured);
+const latestPosts = sortedPosts.slice(0, 5);
+---
+
+<BaseLayout title="Strona Główna" description={siteConfig.description}>
+    
+    <!-- Hero Section -->
+    <section class="text-center py-20">
+        <h1 class="text-5xl font-bold mb-4 text-gray-900 dark:text-white">Witaj na {siteConfig.title}</h1>
+        <p class="text-xl text-gray-600 dark:text-gray-300">{siteConfig.description}</p>
+    </section>
+
+    <!-- Featured Posts Section -->
+    {featuredPosts.length > 0 &&
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-6 border-l-4 border-amber-500 pl-4 text-gray-900 dark:text-white">Wyróżnione Wpisy</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {featuredPosts.map(post => <PostCard post={post} />)}
+            </div>
+        </section>
+    }
+
+    <!-- Latest Posts Section -->
+    <section class="mb-16">
+        <h2 class="text-3xl font-bold mb-6 border-l-4 border-amber-500 pl-4 text-gray-900 dark:text-white">Najnowsze Wpisy</h2>
+        <div class="space-y-8">
+            {latestPosts.map(post => <PostCard post={post} />)}
+        </div>
+    </section>
+
+    <!-- Newsletter CTA -->
+    <section class="bg-amber-500 text-white text-center py-12 rounded-lg">
+        <h2 class="text-3xl font-bold mb-4">Zapisz się na Newsletter!</h2>
+        <p class="mb-6">Otrzymuj najnowsze wpisy prosto na swoją skrzynkę mailową.</p>
+        <div class="w-full max-w-md mx-auto">
+            <!-- Placeholder for Substack/Newsletter Form -->
+            <form class="flex">
+                <input type="email" placeholder="Twój adres email" class="w-full px-4 py-2 rounded-l-md text-gray-800 focus:outline-none">
+                <button type="submit" class="bg-gray-800 text-white px-6 py-2 rounded-r-md hover:bg-gray-700 transition-colors">Zapisz się</button>
+            </form>
+        </div>
+    </section>
+
+</BaseLayout>

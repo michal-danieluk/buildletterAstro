@@ -1,0 +1,34 @@
+--- 
+import BaseLayout from './BaseLayout.astro';
+const { frontmatter } = Astro.props;
+---
+
+<BaseLayout title={frontmatter.title} description={frontmatter.description}>
+    <article class="prose prose-lg dark:prose-invert prose-headings:text-gray-700 dark:prose-headings:text-gray-300">
+        <h1 class="text-4xl font-bold mb-2">{frontmatter.title}</h1>
+        <div class="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400 mb-8">
+            <span>By {frontmatter.author}</span>
+            <span>|</span>
+            <time>{frontmatter.date.toLocaleDateString('pl-PL')}</time>
+            <span>|</span>
+            <div class="flex flex-wrap gap-2">
+                {frontmatter.tags.map(tag => (
+                    <a href={`/tags/${tag}`} class="bg-amber-500 text-white px-2 py-1 rounded text-xs hover:bg-amber-600 transition-colors no-underline">{tag}</a>
+                ))}
+            </div>
+        </div>
+
+        {frontmatter.image && <img src={frontmatter.image} alt={`Obraz dla ${frontmatter.title}`} class="w-full h-auto rounded-lg mb-8"/>}
+
+        <slot />
+
+        <div class="mt-12 border-t border-gray-200 dark:border-gray-700 pt-8">
+            <h3 class="text-2xl font-bold mb-4">Zapisz się na Newsletter</h3>
+            <p class="mb-4">Jeśli podobał Ci się ten artykuł, zapisz się, aby otrzymywać więcej treści prosto na maila.</p>
+            <form class="flex">
+                <input type="email" placeholder="Twój adres email" class="w-full px-4 py-2 rounded-l-md text-gray-800 dark:text-gray-200 bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 focus:outline-none">
+                <button type="submit" class="bg-gray-800 text-white px-6 py-2 rounded-r-md hover:bg-gray-700 bg-amber-500 dark:bg-amber-500 dark:hover:bg-amber-600 transition-colors">Zapisz się</button>
+            </form>
+        </div>
+    </article>
+</BaseLayout>

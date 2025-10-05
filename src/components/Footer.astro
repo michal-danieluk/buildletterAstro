@@ -1,0 +1,15 @@
+--- 
+import { siteConfig } from "../config";
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-gray-100 dark:bg-gray-800 mt-12">
+    <div class="container mx-auto px-4 py-6 text-center text-gray-600 dark:text-gray-400">
+        <div class="mb-2">
+            <a href="/sitemap.xml" class="hover:text-amber-500 dark:hover:text-amber-400 transition-colors">Sitemap</a>
+            <span class="mx-2">|</span>
+            <a href="/rss.xml" class="hover:text-amber-500 dark:hover:text-amber-400 transition-colors">RSS Feed</a>
+        </div>
+        <p>&copy; {currentYear} {siteConfig.title}. Wszelkie prawa zastrzeżone.</p>
+    </div>
+</footer>
