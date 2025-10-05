@@ -1,0 +1,22 @@
+name: Deploy to GitHub Pages
+
+trigger:
+  # Trigger the workflow on push events to the master branch
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out your repository using git
+        uses: actions/checkout@v4
+
+      - name: Install, build, and deploy
+        uses: withastro/action@v2
+        with:
+          # path: . # The root location of your Astro project inside the repository. (optional)
+          # node-version: 20 # The specific Node.js version to use. (optional)
+          # pnpm-version: 8 # The specific pnpm version to use. (optional)
+          package-manager: npm # The package manager to use. (optional)
